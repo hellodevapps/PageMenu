@@ -130,6 +130,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     public var enableHorizontalBounce : Bool = true
     public var hideTopMenuBar : Bool = false
     public var indexInitialController:Int = 0
+    public var scrollViewEnable = false{
+        didSet{
+            self.controllerScrollView.scrollEnabled = scrollViewEnable
+            self.menuScrollView.scrollEnabled = scrollViewEnable
+        }
+    }
     
     var currentOrientationIsPortrait : Bool = true
     var pageIndexForOrientationChange : Int = 0
@@ -1017,5 +1023,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
             })
         }
+    }
+    
+    public func scrollToInitialController(){
+        let initialIndex = self.indexInitialController
+        let widhtScroll = self.controllerScrollView.frame.width
+        let pointInitial = CGPoint(x: widhtScroll * CGFloat(self.indexInitialController) ,y: 0)
+        self.controllerScrollView.setContentOffset(pointInitial, animated: false)
     }
 }
